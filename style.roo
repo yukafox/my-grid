@@ -1,0 +1,50 @@
+$Width = 1176px;
+$gCount = 12;
+$Margin = 5px;
+$g-width =  ($Width - ($gCount * 2 * $Margin)) / $gCount;
+
+.gridN {display: inline; float: left; margin: $Margin;}
+.pushN {position: relative; }
+.pullN {position: relative; }
+
+$columnWidth = @function $gNumber {
+    .grid_$gNumber {
+        @extend .gridN;
+        width: $g-width * $gNumber  + $Margin * 2 * ($gNumber  - 1);
+    }
+
+    .push_$gNumber {
+        @extend .pushN;
+        left: $gNumber * $g-width + ($gNumber * 2 * $Margin);
+    }
+
+    .pull_$gNumber {
+        @extend .pullN;
+        left: -($gNumber * $g-width + ($gNumber * 2 * $Margin));
+    }
+
+    .prefix_$gNumber {
+        padding-left: $gNumber * $g-width + ($gNumber * 2 * $Margin);
+        }
+    .suffix_$gNumber  {
+        padding-right: $gNumber * $g-width + ($gNumber * 2 * $Margin);
+    }
+};
+
+.container_$gCount           { margin-left: auto; margin-right: auto; width: $Width; padding: 2px; }
+
+.alpha                  { margin-left: 0; }
+.omega                  { margin-right: 0; }
+
+.container_$gCount {
+@for $i in 1..$gCount {
+        @mixin $columnWidth($i);
+    }
+
+@for $color, $i in #7CB9E8 #C9FFE5 #B284BE #5D8AA8 #00308F #72A0C1 #AF002A #F0F8FF #E32636 #C46210 #EFDECD #E52B50 #F19CBB #3B7A57 #FFBF00 #FF7E00 #FF033E #9966CC #A4C639 {
+        .grid_$i { background: $color;}
+    }
+}
+
+.clear                  { clear: both; display: block; overflow: hidden; visibility: hidden; width: 0; height: 0; }
+h3                      { text-align: center; }
